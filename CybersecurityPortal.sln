@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSPA", "WebSPA\WebSPA.csproj", "{EC4B024A-DE99-4D63-BD5B-B7750490436A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CybersecurityPortal.API", "CybersecurityPortal.API\CybersecurityPortal.API.csproj", "{D810EF97-5782-4428-97DB-1966F77A9C95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC4B024A-DE99-4D63-BD5B-B7750490436A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC4B024A-DE99-4D63-BD5B-B7750490436A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC4B024A-DE99-4D63-BD5B-B7750490436A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC4B024A-DE99-4D63-BD5B-B7750490436A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D810EF97-5782-4428-97DB-1966F77A9C95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D810EF97-5782-4428-97DB-1966F77A9C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D810EF97-5782-4428-97DB-1966F77A9C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D810EF97-5782-4428-97DB-1966F77A9C95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06D7A143-0D75-45FF-9CB4-F532A812B047}
+	EndGlobalSection
+EndGlobal
