@@ -1,4 +1,4 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 
@@ -6,13 +6,27 @@ import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import localeRuExtra from '@angular/common/locales/extra/ru';
 
+import { AppConfigService } from './config/app-config.service';
+
 // Register locales
 registerLocaleData(localeRu, 'ru', localeRuExtra);
+
+// Load application config at startup
+export function loadConfigFactory(configService: AppConfigService): () => Promise<any> {
+  return () => configService.loadConfig().toPromise();
+}
 
 @NgModule({
   imports: [],
   exports: [HttpClientModule],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadConfigFactory,
+      deps: [AppConfigService],
+      multi: true,
+    },
+  ],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
