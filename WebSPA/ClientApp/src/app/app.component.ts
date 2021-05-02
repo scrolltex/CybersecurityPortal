@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 
-import { AppConfig, APP_CONFIG } from './core/config';
+import { CategoryService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,6 @@ import { AppConfig, APP_CONFIG } from './core/config';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'WebSPA';
-
-  constructor(@Inject(APP_CONFIG) public config: AppConfig) {}
+  categories$ = this.categoryService.getAll();
+  constructor(public loader: LoadingBarService, public categoryService: CategoryService) {}
 }

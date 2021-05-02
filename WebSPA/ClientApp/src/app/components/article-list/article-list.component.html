@@ -1,0 +1,12 @@
+<mat-card class="article-card" *ngFor="let article of articles">
+  <mat-card-header>
+    <mat-card-title>{{ article.title }}</mat-card-title>
+    <mat-card-subtitle>{{ getRelativeDate(article) }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <markdown [data]="article.content"></markdown>
+  </mat-card-content>
+  <mat-card-actions>
+    <a mat-button [routerLink]="['/', 'article', article.id]">Читать далее <mat-icon>chevron_right</mat-icon></a>
+  </mat-card-actions>
+</mat-card>

@@ -22,8 +22,11 @@ export class AppConfigService {
   }
 
   loadConfig(): Observable<AppConfig> {
-    return this.http
-      .get<AppConfig>(`${this.location.origin}/api/configuration`)
-      .pipe(tap((config) => (this._config = config)));
+    return (
+      this.http
+        // .get<AppConfig>(`${this.location.origin}/api/configuration`)
+        .get<AppConfig>(`/assets/config.json`)
+        .pipe(tap((config) => (this._config = config)))
+    );
   }
 }

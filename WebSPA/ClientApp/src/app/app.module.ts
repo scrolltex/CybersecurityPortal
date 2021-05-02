@@ -1,15 +1,46 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { MarkdownModule } from 'ngx-markdown';
 
+import { SharedModule } from './shared';
+import { CoreModule } from './core';
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core/core.module';
+import { ArticleListComponent } from './components/article-list/article-list.component';
+import { ArticleFullComponent } from './components/article-full/article-full.component';
+import { CreateArticleComponent } from './components/create-article/create-article.component';
+import { ArticlesByCategoryComponent } from './components/articles-by-category/articles-by-category.component';
+import { HomeComponent } from './components/home/home.component';
+import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, SharedModule, CoreModule],
+  declarations: [
+    AppComponent,
+    ArticleListComponent,
+    ArticleFullComponent,
+    CreateArticleComponent,
+    ArticlesByCategoryComponent,
+    HomeComponent,
+    ThemeToggleComponent,
+    SearchComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    SharedModule,
+    CoreModule,
+    LoadingBarModule,
+    LoadingBarHttpClientModule,
+    LoadingBarRouterModule,
+    MarkdownModule.forRoot(),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

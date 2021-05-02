@@ -1,10 +1,46 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { ArticleFullComponent } from './components/article-full/article-full.component';
+import { CreateArticleComponent } from './components/create-article/create-article.component';
+import { ArticlesByCategoryComponent } from './components/articles-by-category/articles-by-category.component';
+import { HomeComponent } from './components/home/home.component';
+import { SearchComponent } from './components/search/search.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'all',
+  },
+  {
+    path: 'all',
+    component: HomeComponent,
+  },
+  {
+    path: 'category/:id',
+    component: ArticlesByCategoryComponent,
+  },
+  {
+    path: 'article/new',
+    component: CreateArticleComponent,
+  },
+  {
+    path: 'article/:id',
+    component: ArticleFullComponent,
+  },
+  {
+    path: 'search',
+    component: SearchComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

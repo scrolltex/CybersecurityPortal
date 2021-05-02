@@ -46,6 +46,8 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+import { MyPaginatorIntl } from './my-paginator-intl';
+
 /**
  * NgModule that includes all Material modules.
  */
@@ -102,6 +104,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } as MatSnackBarConfig },
+    { provide: MatPaginatorIntl, useClass: MyPaginatorIntl },
   ],
 })
 export class MaterialModule {}

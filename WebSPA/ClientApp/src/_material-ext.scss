@@ -1,0 +1,13 @@
+@mixin material-ext-theme($theme) {
+  $config: mat-get-color-config($theme);
+  $primary: map-get($config, primary);
+
+  a.mat-list-item.active {
+    background-color: transparentize(mat-color($primary), 0.8);
+
+    &:hover,
+    &:focus {
+      background-color: transparentize(mat-color($primary), 0.7);
+    }
+  }
+}
