@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CybersecurityPortal.API.Models.Dtos;
 using CybersecurityPortal.API.Models.ViewModels;
 using CybersecurityPortal.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +12,7 @@ namespace CybersecurityPortal.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ArticlesController : ControllerBase
     {
         private readonly IArticleService _articleService;
@@ -21,21 +24,25 @@ namespace CybersecurityPortal.API.Controllers
 
         // GET: api/Articles
         [HttpGet]
-        public async Task<PaginatedViewModel<ArticleDto>> GetArticles(
-            [FromQuery] int pageSize = 10, 
-            [FromQuery] int pageIndex = 0,
+        [AllowAnonymous]
+        public Task<PaginatedViewModel<ArticleDto>> GetArticles(
+            [FromQuery] PaginationRequest pagination,
+            [FromQuery] string? userName = null,
             [FromQuery] Guid? categoryId = null)
         {
-            return await _articleService.GetAll(pageSize, pageIndex, categoryId);
+            return string.IsNullOrWhiteSpace(userName)
+                ? _articleService.GetAllAsync(pagination, categoryId)
+                : _articleService.GetByUserAsync(userName, pagination);
         }
 
         // GET: api/Articles/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ArticleDto>> GetArticle(Guid id)
         {
-            return await _articleService.GetById(id);
+            return await _articleService.FindByIdAsync(id);
         }
 
         // POST: api/Articles
@@ -44,7 +51,9 @@ namespace CybersecurityPortal.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<ArticleDto>> PostArticle(CreateArticleDto articleDto)
         {
-            var article = await _articleService.Add(articleDto);
+            var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var article = await _articleService.AddAsync(articleDto, userName);
 
             return CreatedAtAction(nameof(GetArticle), new { id = article.Id }, article);
         }
@@ -62,7 +71,7 @@ namespace CybersecurityPortal.API.Controllers
                 return BadRequest();
             }
 
-            await _articleService.Update(articleDto);
+            await _articleService.UpdateAsync(articleDto);
 
             return NoContent();
         }
@@ -73,7 +82,7 @@ namespace CybersecurityPortal.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteArticle(Guid id)
         {
-            await _articleService.Delete(id);
+            await _articleService.DeleteAsync(id);
 
             return NoContent();
         }

@@ -6,6 +6,10 @@ namespace CybersecurityPortal.API.Models
     {
         public Guid Id { get; set; }
 
+        public string UserId { get; set; } = null!;
+
+        public virtual User? User { get; set; }
+
         public Guid CategoryId { get; set; }
 
         public virtual Category? Category { get; set; }

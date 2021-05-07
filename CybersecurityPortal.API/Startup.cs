@@ -1,15 +1,20 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using CybersecurityPortal.API.Infrastructure;
 using CybersecurityPortal.API.Middlewares;
+using CybersecurityPortal.API.Models;
 using CybersecurityPortal.API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace CybersecurityPortal.API
@@ -40,6 +45,30 @@ namespace CybersecurityPortal.API
                 options.UseSqlite(Configuration.GetConnectionString("default"));
             });
 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(
+                    opt =>
+                    {
+                        opt.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = key,
+                            ValidateAudience = false,
+                            ValidateIssuer = false,
+                        };
+                    });
+
+            services
+                .AddIdentityCore<User>(opt =>
+                {
+                    opt.Password.RequireNonAlphanumeric = false;
+                })
+                .AddRoles<IdentityRole>()
+                .AddSignInManager<SignInManager<User>>()
+                .AddEntityFrameworkStores<DataContext>();
+
             services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddControllers();
@@ -51,6 +80,9 @@ namespace CybersecurityPortal.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services
+                .AddScoped<IJwtGenerator, JwtGenerator>();
 
             services
                 .AddScoped<ICategoryService, CategoryService>()
@@ -72,6 +104,7 @@ namespace CybersecurityPortal.API
 
             app.UseRouting();
             app.UseCors("AllowAnyPolicy");
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

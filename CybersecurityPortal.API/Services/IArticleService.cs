@@ -7,14 +7,16 @@ namespace CybersecurityPortal.API.Services
 {
     public interface IArticleService
     {
-        Task<PaginatedViewModel<ArticleDto>> GetAll(int pageSize, int pageIndex, Guid? categoryId = null);
+        Task<PaginatedViewModel<ArticleDto>> GetAllAsync(PaginationRequest pagination, Guid? categoryId = null);
 
-        Task<ArticleDto> GetById(Guid id);
+        Task<PaginatedViewModel<ArticleDto>> GetByUserAsync(string userName, PaginationRequest pagination);
 
-        Task<ArticleDto> Add(CreateArticleDto articleDto);
+        Task<ArticleDto> FindByIdAsync(Guid id);
 
-        Task Update(ArticleDto articleDto);
+        Task<ArticleDto> AddAsync(CreateArticleDto articleDto, string userName);
 
-        Task Delete(Guid id);
+        Task UpdateAsync(ArticleDto articleDto);
+
+        Task DeleteAsync(Guid id);
     }
 }
