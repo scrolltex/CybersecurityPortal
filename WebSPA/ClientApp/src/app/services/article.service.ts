@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AppConfig, APP_CONFIG } from '@app/core/config';
-import { Article, PaginatedViewModel } from '../models';
+import { Article, CreateArticleModel, PaginatedViewModel } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -23,5 +23,17 @@ export class ArticleService {
     }
 
     return this.http.get<PaginatedViewModel<Article>>(this.baseUrl, { params });
+  }
+
+  create(model: CreateArticleModel): Observable<Article> {
+    return this.http.post<Article>(this.baseUrl, model);
+  }
+
+  update(model: Article): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${model.id}`, model);
+  }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

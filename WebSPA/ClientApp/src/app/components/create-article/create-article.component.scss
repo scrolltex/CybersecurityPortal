@@ -1,0 +1,26 @@
+:host {
+  padding: 14px;
+  overflow: auto;
+}
+
+.header-card {
+  margin-bottom: 14px;;
+}
+
+.articles {
+  max-width: 800px;
+  margin: auto;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  gap: 15px;
+
+  .category-field {
+    flex: 200px;
+  }
+}
