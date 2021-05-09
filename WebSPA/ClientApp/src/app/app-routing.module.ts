@@ -56,6 +56,7 @@ const routes: Routes = [
         path: 'search',
         component: SearchComponent,
       },
+      { path: 'users', loadChildren: () => import('./users/users.module').then((m) => m.UsersModule) },
       {
         path: '**',
         redirectTo: '',

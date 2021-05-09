@@ -1,0 +1,23 @@
+<mat-card *ngIf="user$ | async as user">
+  <mat-card-header>
+    <img mat-card-avatar [appGravatar]="user.email" />
+    <mat-card-title>@{{ user.userName }}</mat-card-title>
+    <mat-card-subtitle>Description</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <nav mat-tab-nav-bar>
+      <a
+        mat-tab-link
+        *ngFor="let tab of tabs"
+        [routerLink]="tab.link"
+        [active]="rla.isActive"
+        routerLinkActive
+        #rla="routerLinkActive"
+      >
+        {{ tab.title }}
+      </a>
+    </nav>
+  </mat-card-content>
+</mat-card>
+
+<router-outlet></router-outlet>
