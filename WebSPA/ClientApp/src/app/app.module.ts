@@ -18,6 +18,9 @@ import { ArticlesByCategoryComponent } from './components/articles-by-category/a
 import { HomeComponent } from './components/home/home.component';
 import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
 import { SearchComponent } from './components/search/search.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { SearchComponent } from './components/search/search.component';
     HomeComponent,
     ThemeToggleComponent,
     SearchComponent,
+    LoginComponent,
+    RegisterComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import localeRu from '@angular/common/locales/ru';
 import localeRuExtra from '@angular/common/locales/extra/ru';
 
 import { AppConfigService } from './config/app-config.service';
+import { JwtModule } from '@auth0/angular-jwt';
 
 // Register locales
 registerLocaleData(localeRu, 'ru', localeRuExtra);
@@ -17,7 +18,14 @@ export function loadConfigFactory(configService: AppConfigService): () => Promis
 }
 
 @NgModule({
-  imports: [],
+  imports: [
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('access_token'),
+        allowedDomains: ['localhost:5001'],
+      },
+    }),
+  ],
   exports: [HttpClientModule],
   providers: [
     {

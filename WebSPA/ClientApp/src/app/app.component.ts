@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-
-import { CategoryService } from './services';
+import { ThemeService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +8,5 @@ import { CategoryService } from './services';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  categories$ = this.categoryService.getAll();
-  constructor(public loader: LoadingBarService, public categoryService: CategoryService) {}
+  constructor(public loader: LoadingBarService, themeService: ThemeService) {}
 }

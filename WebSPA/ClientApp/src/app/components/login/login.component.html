@@ -1,0 +1,24 @@
+<mat-card class="full-width">
+  <mat-card-header>
+    <mat-card-title>Вход</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="login-form" [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Логин</mat-label>
+        <input matInput formControlName="userName" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Пароль</mat-label>
+        <input type="password" matInput formControlName="password" />
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-stroked-button color="accent" (click)="login()" [disabled]="form.invalid">Войти</button>
+  </mat-card-actions>
+</mat-card>
+<mat-card class="register-card full-width">
+  <p>Нет аккаунта?</p>
+  <a mat-button routerLink="/register" color="accent">Регистрация</a>
+</mat-card>
