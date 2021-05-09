@@ -9,6 +9,8 @@ export class GravatarDirective implements OnChanges {
 
   @Input() fallback: 'blank' | 'identicon' | 'mp' | 'monsterid' | 'retro' | 'robohash' | 'wavatar' = 'identicon';
 
+  @Input() size = 32;
+
   constructor(private el: ElementRef) {}
 
   ngOnChanges(): void {
@@ -17,6 +19,6 @@ export class GravatarDirective implements OnChanges {
 
   private _update(): void {
     const emailHash = MD5(this.email.trim().toLowerCase()).toString();
-    this.el.nativeElement.src = `https://www.gravatar.com/avatar/${emailHash}?d=${this.fallback}`;
+    this.el.nativeElement.src = `https://www.gravatar.com/avatar/${emailHash}?d=${this.fallback}&s=${this.size}`;
   }
 }

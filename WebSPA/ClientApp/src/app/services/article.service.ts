@@ -14,7 +14,7 @@ export class ArticleService {
     this.baseUrl = `${config.apiUrl}/api/articles`;
   }
 
-  getAll(pageSize = 10, pageIndex = 0, categoryId?: number): Observable<PaginatedViewModel<Article>> {
+  getAll(pageSize = 10, pageIndex = 0, categoryId?: string): Observable<PaginatedViewModel<Article>> {
     let params = new HttpParams();
     params = params.set('pageSize', pageSize.toString());
     params = params.set('pageIndex', pageIndex.toString());
@@ -23,6 +23,10 @@ export class ArticleService {
     }
 
     return this.http.get<PaginatedViewModel<Article>>(this.baseUrl, { params });
+  }
+
+  getById(id: string): Observable<Article> {
+    return this.http.get<Article>(`${this.baseUrl}/${id}`);
   }
 
   create(model: CreateArticleModel): Observable<Article> {

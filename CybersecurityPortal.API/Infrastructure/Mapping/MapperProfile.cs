@@ -8,6 +8,8 @@ namespace CybersecurityPortal.API.Infrastructure.Mapping
     {
         public MapperProfile()
         {
+            CreateMap<User, UserDto>();
+
             CreateMap<Category, CategoryDto>().ReverseMap();
 
             CreateMap<Article, ArticleDto>().ReverseMap();

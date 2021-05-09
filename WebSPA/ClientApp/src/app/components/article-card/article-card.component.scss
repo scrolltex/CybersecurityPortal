@@ -1,0 +1,48 @@
+@import '~@angular/material/theming';
+
+article.article-card {
+  border-radius: 4px;
+  padding: 16px;
+
+  @include mat-elevation(2);
+}
+
+.metadata {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+
+  .user-link {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.content {
+  margin: 14px 0;
+
+  .article-header__link {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.card-footer {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.liked {
+  color: #17da17;
+}
+
+.bookmarked {
+  color: #f5bc1c;
+}

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { UnAuthorizeGuard } from './core/guards';
+import { ArticleResolveService } from './services/resolvers/article-resolve.service';
 
 import { ArticleFullComponent } from './components/article-full/article-full.component';
 import { CreateArticleComponent } from './components/create-article/create-article.component';
@@ -37,7 +38,7 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
-        path: 'category/:id',
+        path: 'category/:categoryId',
         component: ArticlesByCategoryComponent,
       },
       {
@@ -47,6 +48,9 @@ const routes: Routes = [
       {
         path: 'article/:id',
         component: ArticleFullComponent,
+        resolve: {
+          article: ArticleResolveService,
+        },
       },
       {
         path: 'search',

@@ -2,6 +2,7 @@
 
 // Plus imports for other components in your app.
 @import './material-ext.scss';
+@import './app/components/article-card/article-card.theme.scss';
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -34,6 +35,7 @@ $light-theme: mat-light-theme(
 // that you are using.
 @include angular-material-theme($light-theme);
 @include material-ext-theme($light-theme);
+@include candy-carousel-color($light-theme);
 
 // Define an alternate dark theme.
 $dark-primary: mat-palette($mat-blue-grey);
@@ -55,4 +57,5 @@ $dark-theme: mat-dark-theme(
 .dark-theme {
   @include angular-material-color($dark-theme);
   @include material-ext-theme($dark-theme);
+  @include candy-carousel-color($dark-theme);
 }

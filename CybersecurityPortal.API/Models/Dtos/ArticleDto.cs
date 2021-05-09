@@ -7,6 +7,8 @@ namespace CybersecurityPortal.API.Models.Dtos
     {
         public Guid Id { get; set; }
 
+        public UserDto? User { get; set; }
+
         public Guid CategoryId { get; set; }
 
         public CategoryDto? Category { get; set; }
