@@ -14,7 +14,9 @@
       </mat-form-field>
     </form>
   </mat-card-content>
-  <mat-card-actions align="end">
+  <mat-card-actions class="flex">
+    <a mat-icon-button routerLink="/" matTooltip="Главную"><mat-icon>home</mat-icon></a>
+    <div class="spacer"></div>
     <button mat-stroked-button color="accent" (click)="login()" [disabled]="form.invalid">Войти</button>
   </mat-card-actions>
 </mat-card>

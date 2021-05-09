@@ -19,7 +19,7 @@ export class AuthService {
   constructor(@Inject(APP_CONFIG) config: AppConfig, private http: HttpClient, private jwtService: JwtHelperService) {
     this.baseUrl = `${config.apiUrl}/api/auth`;
 
-    const savedToken = localStorage.getItem('access_token');
+    const savedToken = AuthService.getToken();
     this.accessToken$ = new BehaviorSubject<string | null>(savedToken);
     this.userData$ = this.accessToken$.pipe(
       map((token) => {
@@ -33,6 +33,10 @@ export class AuthService {
         };
       })
     );
+  }
+
+  static getToken(): string | null {
+    return localStorage.getItem('access_token');
   }
 
   auth(model: SignInModel): Observable<string> {

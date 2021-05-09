@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { UnAuthorizeGuard } from './core/guards';
+
 import { ArticleFullComponent } from './components/article-full/article-full.component';
 import { CreateArticleComponent } from './components/create-article/create-article.component';
 import { ArticlesByCategoryComponent } from './components/articles-by-category/articles-by-category.component';
@@ -14,10 +16,12 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [UnAuthorizeGuard],
   },
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [UnAuthorizeGuard],
   },
   {
     path: '',
