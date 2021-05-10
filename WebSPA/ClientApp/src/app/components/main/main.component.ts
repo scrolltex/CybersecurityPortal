@@ -11,4 +11,8 @@ export class MainComponent {
   categories$ = this.categoryService.getAll();
 
   constructor(public authService: AuthService, public categoryService: CategoryService) {}
+
+  logout(): void {
+    this.authService.logout();
+  }
 }

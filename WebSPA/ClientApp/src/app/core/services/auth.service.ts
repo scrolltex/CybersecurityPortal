@@ -5,18 +5,20 @@ import { map, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { APP_CONFIG, AppConfig } from '../config';
-import { SignInModel, RegisterModel } from '../models';
+import { SignInModel, RegisterModel, JwtData } from '../models';
+
+const TOKEN_KEY = 'access_token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   accessToken$: BehaviorSubject<string | null>;
-  userData$: Observable<{ nameid: string; email: string } | null>;
+  userData$: Observable<JwtData | null>;
 
   private readonly baseUrl: string;
 
-  constructor(@Inject(APP_CONFIG) config: AppConfig, private http: HttpClient, private jwtService: JwtHelperService) {
+  constructor(@Inject(APP_CONFIG) config: AppConfig, private http: HttpClient, jwtService: JwtHelperService) {
     this.baseUrl = `${config.apiUrl}/api/auth`;
 
     const savedToken = AuthService.getToken();
@@ -36,14 +38,14 @@ export class AuthService {
   }
 
   static getToken(): string | null {
-    return localStorage.getItem('access_token');
+    return localStorage.getItem(TOKEN_KEY);
   }
 
   auth(model: SignInModel): Observable<string> {
     return this.http.post<{ access_token: string }>(this.baseUrl, model).pipe(
       map((m) => m.access_token),
       tap((token) => {
-        localStorage.setItem('access_token', token);
+        localStorage.setItem(TOKEN_KEY, token);
         this.accessToken$.next(token);
       })
     );
@@ -51,5 +53,10 @@ export class AuthService {
 
   register(model: RegisterModel): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/register`, model);
+  }
+
+  logout(): void {
+    localStorage.removeItem(TOKEN_KEY);
+    this.accessToken$.next(null);
   }
 }

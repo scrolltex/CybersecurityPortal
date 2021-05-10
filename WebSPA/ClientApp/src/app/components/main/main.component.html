@@ -7,7 +7,9 @@
     <a mat-icon-button routerLink="/search" matTooltip="Поиск"><mat-icon>search</mat-icon></a>
     <ng-container *ngIf="authService.userData$ | async as user; else guestPanel">
       <a mat-icon-button routerLink="/article/new" matTooltip="Создать"><mat-icon>create</mat-icon></a>
-      <img class="avatar" [appGravatar]="user.email" />
+      <button mat-icon-button [matMenuTriggerFor]="userMenu" [matMenuTriggerData]="{ user: user }">
+        <img class="avatar mat-elevation-z2" [appGravatar]="user.email" [size]="24" />
+      </button>
     </ng-container>
     <ng-template #guestPanel>
       <a mat-stroked-button routerLink="/login">Войти</a>
@@ -15,6 +17,33 @@
     </ng-template>
   </mat-toolbar-row>
 </mat-toolbar>
+
+<mat-menu #userMenu="matMenu">
+  <ng-template matMenuContent let-user="user">
+    <p class="user-menu-header">@{{ user.nameid }}</p>
+    <a mat-menu-item [routerLink]="['/', 'users', user.nameid]">
+      <mat-icon>account_circle</mat-icon>
+      <span>Профиль</span>
+    </a>
+    <a mat-menu-item [routerLink]="['/', 'users', user.nameid, 'articles']">
+      <mat-icon>article</mat-icon>
+      <span>Статьи</span>
+    </a>
+    <a mat-menu-item [routerLink]="['/', 'users', user.nameid, 'bookmarks']">
+      <mat-icon>bookmark</mat-icon>
+      <span>Закладки</span>
+    </a>
+    <mat-divider> </mat-divider>
+    <a mat-menu-item [routerLink]="['/', 'auth', 'settings']">
+      <mat-icon>settings</mat-icon>
+      <span>Настройки аккаунта</span>
+    </a>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Выйти</span>
+    </button>
+  </ng-template>
+</mat-menu>
 
 <mat-drawer-container class="drawer-container">
   <mat-drawer #drawer class="drawer" mode="side" opened>

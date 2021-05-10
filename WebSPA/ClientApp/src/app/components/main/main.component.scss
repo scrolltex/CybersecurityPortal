@@ -14,11 +14,15 @@
   }
 
   .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
     margin: 0 8px;
   }
+}
+
+.user-menu-header {
+  padding: 0 14px;
+  height: 24px;
+  text-align: center;
+  font-size: 1.1em;
 }
 
 .drawer-container {
