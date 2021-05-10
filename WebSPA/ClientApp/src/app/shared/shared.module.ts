@@ -4,9 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material.module';
 import { GravatarModule } from './gravatar';
+import { AuthDirective } from './auth.directive';
 
 @NgModule({
-  declarations: [],
-  exports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, GravatarModule],
+  declarations: [AuthDirective],
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, GravatarModule, AuthDirective],
 })
 export class SharedModule {}

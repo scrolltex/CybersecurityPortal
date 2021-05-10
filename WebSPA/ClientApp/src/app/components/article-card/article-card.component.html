@@ -6,21 +6,25 @@
   </div>
   <mat-divider></mat-divider>
   <div class="content">
-    <h1><a class="article-header__link" [routerLink]="['/', 'article', article.id]"><span class="mat-h1">{{ article.title }}</span></a></h1>
+    <h1>
+      <a class="article-header__link" [routerLink]="['/', 'article', article.id]"
+        ><span class="mat-h1">{{ article.title }}</span></a
+      >
+    </h1>
     <markdown [data]="article.content"></markdown>
   </div>
   <mat-divider></mat-divider>
   <div class="card-footer">
-    <div>
-      <button mat-icon-button [class.liked]="true" (click)="like()"><mat-icon>thumb_up</mat-icon></button>
-      <span>123</span>
-    </div>
-    <div>
-      <button mat-icon-button><mat-icon>chat</mat-icon></button>
-      <span>2</span>
+    <div *appAuth>
+      <button mat-icon-button [class.liked]="article.userState.userLikes" (click)="like()">
+        <mat-icon>thumb_up</mat-icon>
+      </button>
+      <span>{{ article.stats.likes }}</span>
     </div>
     <div class="spacer"></div>
-    <button mat-icon-button [class.bookmarked]="true" (click)="bookmark()"><mat-icon>bookmark</mat-icon></button>
+    <button mat-icon-button [class.bookmarked]="article.userState.userBookmark" (click)="bookmark()" *appAuth>
+      <mat-icon>bookmark</mat-icon>
+    </button>
     <button mat-icon-button (click)="share()" matTooltip="Поделиться"><mat-icon>share</mat-icon></button>
   </div>
 </article>

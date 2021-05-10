@@ -20,5 +20,9 @@ namespace CybersecurityPortal.API.Models.Dtos
         public string Content { get; set; } = "";
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        public virtual ArticleStatsDto Stats { get; set; } = new();
+
+        public virtual ArticleUserStateDto UserState { get; set; } = new();
     }
 }

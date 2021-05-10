@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { LOCATION } from '@ng-web-apis/common';
 
 import { AuthService } from '@app/core/services';
 import { CategoryService } from '@app/services';
@@ -10,9 +11,14 @@ import { CategoryService } from '@app/services';
 export class MainComponent {
   categories$ = this.categoryService.getAll();
 
-  constructor(public authService: AuthService, public categoryService: CategoryService) {}
+  constructor(
+    public authService: AuthService,
+    public categoryService: CategoryService,
+    @Inject(LOCATION) private location: Location
+  ) {}
 
   logout(): void {
     this.authService.logout();
+    this.location.reload();
   }
 }

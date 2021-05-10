@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CybersecurityPortal.API.Models
 {
@@ -19,5 +20,9 @@ namespace CybersecurityPortal.API.Models
         public string Content { get; set; } = "";
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        public virtual ICollection<UserArticleBookmark> UserBookmarks { get; set; } = new List<UserArticleBookmark>();
+
+        public virtual ICollection<UserArticleLike> UserLikes { get; set; } = new List<UserArticleLike>();
     }
 }

@@ -30,9 +30,10 @@ namespace CybersecurityPortal.API.Controllers
             [FromQuery] string? userName = null,
             [FromQuery] Guid? categoryId = null)
         {
+            var currentUserName = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return string.IsNullOrWhiteSpace(userName)
-                ? _articleService.GetAllAsync(pagination, categoryId)
-                : _articleService.GetByUserAsync(userName, pagination);
+                ? _articleService.GetAllAsync(currentUserName, pagination, categoryId)
+                : _articleService.GetByUserAsync(currentUserName, userName, pagination);
         }
 
         // GET: api/Articles/5
@@ -42,7 +43,8 @@ namespace CybersecurityPortal.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ArticleDto>> GetArticle(Guid id)
         {
-            return await _articleService.FindByIdAsync(id);
+            var currentUserName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _articleService.FindByIdAsync(currentUserName, id);
         }
 
         // POST: api/Articles
@@ -85,6 +87,26 @@ namespace CybersecurityPortal.API.Controllers
             await _articleService.DeleteAsync(id);
 
             return NoContent();
+        }
+
+        [HttpPost("{articleId}/bookmark")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ToggleBookmark(Guid articleId)
+        {
+            var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _articleService.ToggleBookmarkAsync(articleId, userName);
+            return Ok(result);
+        }
+
+        [HttpPost("{articleId}/like")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ToggleLike(Guid articleId)
+        {
+            var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var (state, count) = await _articleService.ToggleLikeAsync(articleId, userName);
+            return Ok(new { state, count });
         }
     }
 }

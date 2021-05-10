@@ -40,4 +40,12 @@ export class ArticleService {
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  toggleBookmark(articleId: string): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}/${articleId}/bookmark`, {});
+  }
+
+  toggleLike(articleId: string): Observable<{ state: boolean; count: number }> {
+    return this.http.post<{ state: boolean; count: number }>(`${this.baseUrl}/${articleId}/like`, {});
+  }
 }

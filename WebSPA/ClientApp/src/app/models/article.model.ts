@@ -9,4 +9,15 @@ export interface Article {
   title: string;
   content: string;
   createdAt: Date | string;
+  stats: ArticleStats;
+  userState: ArticleUserState;
+}
+
+export interface ArticleStats {
+  likes: number;
+}
+
+export interface ArticleUserState {
+  userLikes: boolean;
+  userBookmark: boolean;
 }
