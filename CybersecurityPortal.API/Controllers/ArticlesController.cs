@@ -36,6 +36,16 @@ namespace CybersecurityPortal.API.Controllers
                 : _articleService.GetByUserAsync(currentUserName, userName, pagination);
         }
 
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<PaginatedViewModel<ArticleDto>> Search(
+            [FromQuery] PaginationRequest pagination,
+            [FromQuery] string searchRequest)
+        {
+            var currentUserName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _articleService.SearchAsync(currentUserName, pagination, searchRequest);
+        }
+
         // GET: api/Articles/5
         [HttpGet("{id}")]
         [AllowAnonymous]

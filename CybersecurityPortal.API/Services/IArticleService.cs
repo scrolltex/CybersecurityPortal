@@ -22,6 +22,11 @@ namespace CybersecurityPortal.API.Services
             string userName,
             PaginationRequest pagination);
 
+        Task<PaginatedViewModel<ArticleDto>> SearchAsync(
+            string? currentUserName,
+            PaginationRequest pagination,
+            string searchRequest);
+
         Task<ArticleDto> FindByIdAsync(string? currentUserName, Guid id);
 
         Task<ArticleDto> AddAsync(CreateArticleDto articleDto, string userName);

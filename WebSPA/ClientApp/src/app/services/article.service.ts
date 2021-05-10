@@ -25,6 +25,15 @@ export class ArticleService {
     return this.http.get<PaginatedViewModel<Article>>(this.baseUrl, { params });
   }
 
+  search(searchRequest: string, pageSize = 10, pageIndex = 0): Observable<PaginatedViewModel<Article>> {
+    let params = new HttpParams();
+    params = params.set('searchRequest', searchRequest);
+    params = params.set('pageSize', pageSize.toString());
+    params = params.set('pageIndex', pageIndex.toString());
+
+    return this.http.get<PaginatedViewModel<Article>>(`${this.baseUrl}/search`, { params });
+  }
+
   getById(id: string): Observable<Article> {
     return this.http.get<Article>(`${this.baseUrl}/${id}`);
   }

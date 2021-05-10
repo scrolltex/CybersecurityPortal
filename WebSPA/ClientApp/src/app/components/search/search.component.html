@@ -1,1 +1,31 @@
-<p>search works!</p>
+<div class="articles">
+  <mat-card class="top-card">
+    <div class="search-bar">
+      <mat-form-field class="search-field" appearance="standard">
+        <mat-label>Поиск</mat-label>
+        <input matInput [(ngModel)]="searchRequest" required #searchField="ngModel" />
+      </mat-form-field>
+      <button
+        mat-stroked-button
+        [routerLink]="[]"
+        [queryParams]="{ searchRequest: searchField.value, pageIndex: 0 }"
+        [disabled]="searchField.invalid"
+      >
+        <mat-icon>search</mat-icon> Найти
+      </button>
+    </div>
+  </mat-card>
+  <main *ngIf="articles$ | async as articles">
+    <app-article-list [articles]="articles?.items"></app-article-list>
+    <mat-card *ngIf="articles.totalItems > articles.pageSize">
+      <mat-paginator
+        [length]="articles.totalItems"
+        [pageIndex]="articles.pageIndex"
+        [pageSize]="articles.pageSize"
+        [pageSizeOptions]="[articles.pageSize]"
+        (page)="_onPageChange($event)"
+      >
+      </mat-paginator>
+    </mat-card>
+  </main>
+</div>

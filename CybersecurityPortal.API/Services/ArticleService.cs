@@ -104,6 +104,21 @@ namespace CybersecurityPortal.API.Services
             return await pagination.ApplyAsync(query);
         }
 
+        public async Task<PaginatedViewModel<ArticleDto>> SearchAsync(string? currentUserName, PaginationRequest pagination, string searchRequest)
+        {
+            var userManager = _serviceProvider.GetRequiredService<UserManager<User>>();
+            var currentUser = currentUserName != null ? await userManager.FindByNameAsync(currentUserName) : null;
+
+            var query = _context.Articles
+                .Include(x => x.Category)
+                .Where(x => x.Title.Contains(searchRequest))
+                .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider, new { currentUserId = currentUser?.Id })
+                .OrderByDescending(a => a.CreatedAt)
+                .AsQueryable();
+
+            return await pagination.ApplyAsync(query);
+        }
+
         public async Task<ArticleDto> FindByIdAsync(string? currentUserName, Guid id)
         {
             var userManager = _serviceProvider.GetRequiredService<UserManager<User>>();

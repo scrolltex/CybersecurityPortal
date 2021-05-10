@@ -1,0 +1,22 @@
+:host {
+  padding: 14px;
+  overflow: auto;
+}
+
+.top-card {
+  margin-bottom: 14px;
+  .search-bar {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+
+    .search-field {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+.articles {
+  max-width: 800px;
+  margin: auto;
+}
