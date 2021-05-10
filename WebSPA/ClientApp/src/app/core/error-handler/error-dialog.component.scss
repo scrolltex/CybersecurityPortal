@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+.title {
+  color: mat-color(mat-palette($mat-red));
+}
+
+.error-text {
+  white-space: pre-wrap;
+}

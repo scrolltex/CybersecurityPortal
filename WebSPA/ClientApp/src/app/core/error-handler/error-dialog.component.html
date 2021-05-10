@@ -1,0 +1,20 @@
+<h2 mat-dialog-title class="title">Произошла ошибка</h2>
+<mat-dialog-content>
+  <p class="error-text">{{ data.message }}</p>
+  <ng-container *ngIf="data.details">
+    <mat-divider></mat-divider>
+    <div>
+      <button mat-icon-button (click)="showDetails = !showDetails">
+        <mat-icon>{{ showDetails ? 'expand_less' : 'expand_more' }}</mat-icon>
+      </button>
+      <span>Подробности</span>
+    </div>
+    <div *ngIf="showDetails" style="white-space: pre-wrap">
+      {{ formatedDetails }}
+    </div>
+  </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="spacer"></div>
+  <button mat-button mat-dialog-close cdkFocusInitial>Ок</button>
+</mat-dialog-actions>

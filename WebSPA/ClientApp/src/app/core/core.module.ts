@@ -9,6 +9,7 @@ import localeRuExtra from '@angular/common/locales/extra/ru';
 import { AppConfigService } from './config/app-config.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from './services';
+import { ErrorHandlerModule } from './error-handler';
 
 // Register locales
 registerLocaleData(localeRu, 'ru', localeRuExtra);
@@ -26,6 +27,7 @@ export function loadConfigFactory(configService: AppConfigService): () => Promis
         allowedDomains: ['localhost:5001'],
       },
     }),
+    ErrorHandlerModule,
   ],
   exports: [HttpClientModule],
   providers: [
