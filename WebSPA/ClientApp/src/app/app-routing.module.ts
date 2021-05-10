@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { UnAuthorizeGuard } from './core/guards';
 import { ArticleResolveService } from './services/resolvers/article-resolve.service';
 
 import { ArticleFullComponent } from './components/article-full/article-full.component';
@@ -9,21 +8,9 @@ import { CreateArticleComponent } from './components/create-article/create-artic
 import { ArticlesByCategoryComponent } from './components/articles-by-category/articles-by-category.component';
 import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { MainComponent } from './components/main/main.component';
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [UnAuthorizeGuard],
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    canActivate: [UnAuthorizeGuard],
-  },
   {
     path: '',
     component: MainComponent,
@@ -56,7 +43,14 @@ const routes: Routes = [
         path: 'search',
         component: SearchComponent,
       },
-      { path: 'users', loadChildren: () => import('./users/users.module').then((m) => m.UsersModule) },
+      {
+        path: 'users',
+        loadChildren: () => import('./users/users.module').then((m) => m.UsersModule),
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+      },
       {
         path: '**',
         redirectTo: '',

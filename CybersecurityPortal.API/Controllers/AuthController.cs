@@ -84,7 +84,7 @@ namespace CybersecurityPortal.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
         {
             var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrWhiteSpace(userName))
@@ -100,6 +100,42 @@ namespace CybersecurityPortal.API.Controllers
             }
 
             var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.CurrentPassword);
+            if (result.Succeeded)
+                return NoContent();
+
+            foreach (var identityError in result.Errors)
+                ModelState.AddModelError(string.Empty, identityError.Description);
+
+            return ValidationProblem(ModelState);
+        }
+
+        [Authorize]
+        [HttpPost("changeEmail")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailModel model)
+        {
+            var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                return BadRequest();
+            }
+
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Пользователь не найден");
+                return ValidationProblem(ModelState);
+            }
+
+            var checkPassResult = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
+            if (!checkPassResult)
+                return Unauthorized();
+
+            // TODO: Send email
+            var changeEmailToken = await _userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
+            var result = await _userManager.ChangeEmailAsync(user, model.NewEmail, changeEmailToken);
             if (result.Succeeded)
                 return NoContent();
 

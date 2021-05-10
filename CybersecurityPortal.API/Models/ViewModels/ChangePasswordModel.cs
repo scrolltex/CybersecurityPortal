@@ -2,7 +2,7 @@
 
 namespace CybersecurityPortal.API.Models.ViewModels
 {
-    public class ChangePasswordViewModel
+    public class ChangePasswordModel
     {
         [Required]
         public string CurrentPassword { get; set; } = "";

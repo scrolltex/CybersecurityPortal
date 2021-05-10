@@ -5,7 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { APP_CONFIG, AppConfig } from '../config';
-import { SignInModel, RegisterModel, JwtData } from '../models';
+import { SignInModel, RegisterModel, JwtData, ChangePasswordModel, ChangeEmailModel } from '../models';
 
 const TOKEN_KEY = 'access_token';
 
@@ -53,6 +53,14 @@ export class AuthService {
 
   register(model: RegisterModel): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/register`, model);
+  }
+
+  changePassword(model: ChangePasswordModel): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/changePassword`, model);
+  }
+
+  changeEmail(model: ChangeEmailModel): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/changeEmail`, model);
   }
 
   logout(): void {

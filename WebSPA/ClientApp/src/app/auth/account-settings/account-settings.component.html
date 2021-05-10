@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Настройки аккаунта</mat-card-title>
+  </mat-card-header>
+</mat-card>
+
+<mat-card>
+  <div class="account-form">
+    <mat-form-field class="field" appearance="outline">
+      <mat-label>Старый пароль</mat-label>
+      <input type="password" matInput [formControl]="currentPasswordControl" />
+    </mat-form-field>
+    <div>
+      <mat-form-field class="field" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [formControl]="newEmailControl" />
+      </mat-form-field>
+      <button mat-stroked-button (click)="changeEmail()" [disabled]="!canChangeEmail">Изменить</button>
+    </div>
+    <div>
+      <mat-form-field class="field" appearance="outline">
+        <mat-label>Новый пароль</mat-label>
+        <input type="password" matInput [formControl]="newPasswordControl" />
+      </mat-form-field>
+      <button mat-stroked-button (click)="changePassword()" [disabled]="!canChangePassword">Изменить</button>
+    </div>
+  </div>
+</mat-card>
