@@ -49,7 +49,7 @@ namespace CybersecurityPortal.API.Controllers
 
             return Ok(new
             {
-                access_token = _jwtGenerator.CreateToken(user)
+                access_token = await _jwtGenerator.CreateToken(user)
             });
         }
 

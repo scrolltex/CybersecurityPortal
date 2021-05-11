@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using CybersecurityPortal.API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -11,14 +14,16 @@ namespace CybersecurityPortal.API.Services
 {
     public class JwtGenerator : IJwtGenerator
     {
+        private readonly UserManager<User> _userManager;
         private readonly SymmetricSecurityKey _key;
 
-        public JwtGenerator(IConfiguration config)
+        public JwtGenerator(IConfiguration config, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
 
-        public string CreateToken(User user)
+        public async Task<string> CreateToken(User user)
         {
             var claims = new List<Claim>
             {
@@ -26,16 +31,21 @@ namespace CybersecurityPortal.API.Services
                 new(ClaimTypes.Email, user.Email)
             };
 
-            var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            var roles = await _userManager.GetRolesAsync(user);
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
+            var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(7),
-                SigningCredentials = credentials
+                NotBefore = DateTime.UtcNow,
+                SigningCredentials = credentials,
+                Issuer = typeof(Program).Assembly.GetName().Name,
+                IssuedAt = DateTime.UtcNow
             };
-            var tokenHandler = new JwtSecurityTokenHandler();
 
+            var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
