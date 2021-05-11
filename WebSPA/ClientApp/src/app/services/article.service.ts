@@ -14,12 +14,20 @@ export class ArticleService {
     this.baseUrl = `${config.apiUrl}/api/articles`;
   }
 
-  getAll(pageSize = 10, pageIndex = 0, categoryId?: string): Observable<PaginatedViewModel<Article>> {
+  getAll(
+    pageSize = 10,
+    pageIndex = 0,
+    categoryId?: string,
+    userName?: string
+  ): Observable<PaginatedViewModel<Article>> {
     let params = new HttpParams();
     params = params.set('pageSize', pageSize.toString());
     params = params.set('pageIndex', pageIndex.toString());
     if (categoryId != null) {
       params = params.set('categoryId', categoryId.toString());
+    }
+    if (userName != null) {
+      params = params.set('userName', userName);
     }
 
     return this.http.get<PaginatedViewModel<Article>>(this.baseUrl, { params });

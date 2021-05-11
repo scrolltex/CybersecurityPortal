@@ -11,7 +11,6 @@ import { CoreModule } from './core';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { ArticleListComponent } from './components/article-list/article-list.component';
 import { ArticleFullComponent } from './components/article-full/article-full.component';
 import { CreateArticleComponent } from './components/create-article/create-article.component';
 import { ArticlesByCategoryComponent } from './components/articles-by-category/articles-by-category.component';
@@ -19,12 +18,10 @@ import { HomeComponent } from './components/home/home.component';
 import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
 import { SearchComponent } from './components/search/search.component';
 import { MainComponent } from './components/main/main.component';
-import { ArticleCardComponent } from './components/article-card/article-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ArticleListComponent,
     ArticleFullComponent,
     CreateArticleComponent,
     ArticlesByCategoryComponent,
@@ -32,7 +29,6 @@ import { ArticleCardComponent } from './components/article-card/article-card.com
     ThemeToggleComponent,
     SearchComponent,
     MainComponent,
-    ArticleCardComponent,
   ],
   imports: [
     BrowserModule,

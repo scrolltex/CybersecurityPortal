@@ -1,1 +1,13 @@
-<p>user-bookmarks works!</p>
+<main *ngIf="articles$ | async as articles">
+  <app-article-list [articles]="articles?.items"></app-article-list>
+  <mat-card *ngIf="articles.totalItems > articles.pageSize">
+    <mat-paginator
+      [length]="articles.totalItems"
+      [pageIndex]="articles.pageIndex"
+      [pageSize]="articles.pageSize"
+      [pageSizeOptions]="[articles.pageSize]"
+      (page)="_onPageChange($event)"
+    >
+    </mat-paginator>
+  </mat-card>
+</main>

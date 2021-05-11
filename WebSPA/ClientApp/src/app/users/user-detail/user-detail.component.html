@@ -1,4 +1,4 @@
-<mat-card *ngIf="user$ | async as user">
+<mat-card class="user-card" *ngIf="user$ | async as user">
   <mat-card-header>
     <img mat-card-avatar [appGravatar]="user.email" />
     <mat-card-title>@{{ user.userName }}</mat-card-title>
