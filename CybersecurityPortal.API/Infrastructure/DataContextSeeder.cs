@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CybersecurityPortal.API.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CybersecurityPortal.API.Infrastructure
 {
     public static class DataContextSeeder
     {
+        private static readonly Random Rnd = new();
+
         public static async Task SeedAsync(DataContext context, IServiceProvider services)
         {
             await SeedIdentity(services);
@@ -21,12 +26,38 @@ namespace CybersecurityPortal.API.Infrastructure
                 });
                 await context.SaveChangesAsync();
             }
+
+            if (!context.Articles.Any())
+            {
+                var userManager = services.GetRequiredService<UserManager<User>>();
+                var user = await userManager.FindByNameAsync("user");
+
+                const string path = "./Setup/Articles";
+                if (!Directory.Exists(path))
+                    return;
+
+                var files = Directory.GetFiles(path, "*.md").AsEnumerable();
+                files = Shuffle(files);
+
+                var category = await context.Categories.SingleAsync();
+                var articles = files.Select(filePath => new Article
+                {
+                    UserId = user.Id,
+                    CategoryId = category.Id,
+                    Title = Path.GetFileNameWithoutExtension(filePath),
+                    Content = File.ReadAllText(filePath),
+                    CreatedAt = GenRandomDate()
+                }).ToList();
+
+                context.Articles.AddRange(articles);
+                await context.SaveChangesAsync();
+            }
         }
 
         private static async Task SeedIdentity(IServiceProvider services)
         {
-            using var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-            using var userManager = services.GetRequiredService<UserManager<User>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = services.GetRequiredService<UserManager<User>>();
 
             const string adminRoleName = "admin";
             const string moderatorRoleName = "moderator";
@@ -39,15 +70,41 @@ namespace CybersecurityPortal.API.Infrastructure
 
             if (!userManager.Users.Any())
             {
-                var user = new User
+                var adminUser = new User
                 {
                     UserName = "admin",
-                    Email = "admin@example.com"
+                    Email = "admin@cybersecutiry-portal.com"
                 };
+                await userManager.CreateAsync(adminUser, "Admin12345");
+                await userManager.AddToRoleAsync(adminUser, adminRoleName);
 
-                await userManager.CreateAsync(user, "Aa12345");
-                await userManager.AddToRoleAsync(user, adminRoleName);
+                var moderatorUser = new User
+                {
+                    UserName = "moderator",
+                    Email = "moderator@cybersecutiry-portal.com"
+                };
+                await userManager.CreateAsync(moderatorUser, "Moderator12345");
+                await userManager.AddToRoleAsync(adminUser, moderatorRoleName);
+
+                var defaultUser = new User
+                {
+                    UserName = "user",
+                    Email = "user@cybersecutiry-portal.com"
+                };
+                await userManager.CreateAsync(defaultUser, "User12345");
             }
+        }
+
+        private static DateTime GenRandomDate()
+        {
+            var start = DateTime.Today;
+            var range = (int)(DateTime.Now - start).TotalMinutes;
+            return start.AddMinutes(Rnd.Next(range));
+        }
+        public static IEnumerable<T> Shuffle<T>(IEnumerable<T> source)
+        {
+            var rng = new Random();
+            return source.OrderBy(_ => rng.Next());
         }
     }
 }

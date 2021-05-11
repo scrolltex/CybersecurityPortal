@@ -10,6 +10,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Setup\Articles\Как я нашел способ отследить всех водителей «Ситимобил».md" />
+    <None Remove="Setup\Articles\Когда %27a%27 не равно %27а%27. По следам одного взлома.md" />
+    <None Remove="Setup\Articles\Нифига себе сходил за хлебушком, или история одного взлома.md" />
+    <None Remove="Setup\Articles\Обман обманщиков форк-бомба нового уровня.md" />
+    <None Remove="Setup\Articles\Самый беззащитный — это Сапсан.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Setup\Articles\Как я нашел способ отследить всех водителей «Ситимобил».md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Setup\Articles\Когда 'a' не равно 'а'. По следам одного взлома.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Setup\Articles\Нифига себе сходил за хлебушком, или история одного взлома.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Setup\Articles\Обман обманщиков форк-бомба нового уровня.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Setup\Articles\Самый беззащитный — это Сапсан.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
