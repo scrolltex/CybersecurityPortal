@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageEvent } from '@angular/material/paginator';
 import { combineLatest, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -35,7 +34,7 @@ export class UserArticlesComponent implements OnInit {
     );
   }
 
-  _onPageChange(event: PageEvent): void {
-    this.router.navigate([], { relativeTo: this.route, queryParams: { page: event.pageIndex } });
+  _onPageChange(pageIndex: number): void {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { page: pageIndex } });
   }
 }

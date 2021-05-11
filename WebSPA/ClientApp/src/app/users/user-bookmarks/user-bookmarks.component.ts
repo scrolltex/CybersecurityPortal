@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageEvent } from '@angular/material/paginator';
 import { combineLatest, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -33,7 +32,7 @@ export class UserBookmarksComponent implements OnInit {
     ]).pipe(switchMap(([pageIndex, userName]) => this.userService.getBookmarks(userName, PAGE_SIZE, pageIndex)));
   }
 
-  _onPageChange(event: PageEvent): void {
-    this.router.navigate([], { relativeTo: this.route, queryParams: { page: event.pageIndex } });
+  _onPageChange(pageIndex: number): void {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { page: pageIndex } });
   }
 }

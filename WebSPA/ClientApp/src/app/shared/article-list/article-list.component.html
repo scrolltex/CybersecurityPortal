@@ -1,1 +1,13 @@
-<app-article-card *ngFor="let article of articles" [article]="article"></app-article-card>
+<ng-container *ngIf="articles">
+  <app-article-card *ngFor="let article of articles.items; trackBy: _trackByFn" [article]="article"></app-article-card>
+  <mat-card *ngIf="articles.totalItems > articles.pageSize">
+    <mat-paginator
+      [length]="articles.totalItems"
+      [pageIndex]="articles.pageIndex"
+      [pageSize]="articles.pageSize"
+      [pageSizeOptions]="[articles.pageSize]"
+      (page)="_onPageChange($event)"
+    >
+    </mat-paginator>
+  </mat-card>
+</ng-container>

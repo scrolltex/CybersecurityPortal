@@ -6,16 +6,6 @@
     </mat-card-header>
   </mat-card>
   <main *ngIf="articles$ | async as articles">
-    <app-article-list [articles]="articles?.items"></app-article-list>
-    <mat-card *ngIf="articles.totalItems > articles.pageSize">
-      <mat-paginator
-        [length]="articles.totalItems"
-        [pageIndex]="articles.pageIndex"
-        [pageSize]="articles.pageSize"
-        [pageSizeOptions]="[articles.pageSize]"
-        (page)="_onPageChange($event)"
-      >
-      </mat-paginator>
-    </mat-card>
+    <app-article-list [articles]="articles" (pageChange)="_onPageChange($event)"></app-article-list>
   </main>
 </div>

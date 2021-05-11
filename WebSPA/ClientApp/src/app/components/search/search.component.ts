@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageEvent } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
@@ -36,10 +35,10 @@ export class SearchComponent implements OnInit {
     );
   }
 
-  _onPageChange(event: PageEvent): void {
+  _onPageChange(pageIndex: number): void {
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { page: event.pageIndex },
+      queryParams: { page: pageIndex },
       queryParamsHandling: 'merge',
     });
   }

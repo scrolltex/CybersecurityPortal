@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageEvent } from '@angular/material/paginator';
 import { combineLatest, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -37,7 +36,7 @@ export class ArticlesByCategoryComponent implements OnInit {
     ]).pipe(switchMap(([categoryId, pageIndex]) => this.articleService.getAll(PAGE_SIZE, pageIndex, categoryId)));
   }
 
-  _onPageChange(event: PageEvent): void {
-    this.router.navigate([], { relativeTo: this.route, queryParams: { page: event.pageIndex } });
+  _onPageChange(pageIndex: number): void {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { page: pageIndex } });
   }
 }

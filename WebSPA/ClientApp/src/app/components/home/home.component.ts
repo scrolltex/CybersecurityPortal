@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  _onPageChange(event: PageEvent): void {
-    this.router.navigate([], { relativeTo: this.route, queryParams: { page: event.pageIndex } });
+  _onPageChange(pageIndex: number): void {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { page: pageIndex } });
   }
 }
