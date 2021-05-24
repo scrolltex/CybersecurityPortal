@@ -14,6 +14,7 @@ import { ArticleService } from '@app/services';
 })
 export class ArticleCardComponent {
   @Input() article?: Article;
+  @Input() showCutLink = true;
 
   constructor(
     @Inject(LOCATION) private location: Location,

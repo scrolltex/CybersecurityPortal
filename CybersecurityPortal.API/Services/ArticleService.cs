@@ -52,7 +52,12 @@ namespace CybersecurityPortal.API.Services
                 .OrderByDescending(a => a.CreatedAt)
                 .AsQueryable();
 
-            return await pagination.ApplyAsync(query2);
+            var result = await pagination.ApplyAsync(query2);
+            
+            foreach (var article in result.Items)
+                CutArticle(article);
+
+            return result;
         }
 
         public async Task<PaginatedViewModel<ArticleDto>> GetByUserAsync(
@@ -76,7 +81,12 @@ namespace CybersecurityPortal.API.Services
                 .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider, new { currentUserId = currentUser?.Id })
                 .OrderByDescending(a => a.CreatedAt);
 
-            return await pagination.ApplyAsync(query);
+            var result = await pagination.ApplyAsync(query);
+
+            foreach (var article in result.Items)
+                CutArticle(article);
+
+            return result;
         }
 
         public async Task<PaginatedViewModel<ArticleDto>> GetUserBookmarkedAsync(
@@ -101,7 +111,12 @@ namespace CybersecurityPortal.API.Services
                 .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider, new { currentUserId = currentUser?.Id })
                 .OrderByDescending(a => a.CreatedAt);
 
-            return await pagination.ApplyAsync(query);
+            var result = await pagination.ApplyAsync(query);
+
+            foreach (var article in result.Items)
+                CutArticle(article);
+
+            return result;
         }
 
         public async Task<PaginatedViewModel<ArticleDto>> SearchAsync(string? currentUserName, PaginationRequest pagination, string searchRequest)
@@ -116,7 +131,12 @@ namespace CybersecurityPortal.API.Services
                 .OrderByDescending(a => a.CreatedAt)
                 .AsQueryable();
 
-            return await pagination.ApplyAsync(query);
+            var result = await pagination.ApplyAsync(query);
+
+            foreach (var article in result.Items)
+                CutArticle(article);
+
+            return result;
         }
 
         public async Task<ArticleDto> FindByIdAsync(string? currentUserName, Guid id)
@@ -261,6 +281,20 @@ namespace CybersecurityPortal.API.Services
         private bool ArticleExists(Guid id)
         {
             return _context.Articles.Any(e => e.Id == id);
+        }
+
+        /// <summary>
+        /// Обрезает текст статьи до ката.
+        /// </summary>
+        private static void CutArticle(ArticleDto article)
+        {
+            const string tag = "[](CUT)";
+
+            var cutIndex = article.Content.IndexOf(tag, StringComparison.Ordinal);
+            if (cutIndex < 1)
+                return;
+
+            article.Content = article.Content.Substring(0, cutIndex);
         }
     }
 }
