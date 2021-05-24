@@ -18,6 +18,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
 import { SearchComponent } from './components/search/search.component';
 import { MainComponent } from './components/main/main.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MainComponent } from './components/main/main.component';
     ThemeToggleComponent,
     SearchComponent,
     MainComponent,
+    ForbiddenComponent,
   ],
   imports: [
     BrowserModule,

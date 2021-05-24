@@ -28,9 +28,9 @@ namespace CybersecurityPortal.API.Services
             var claims = new List<Claim>
             {
                 new(ClaimTypes.NameIdentifier, user.UserName),
-                new(ClaimTypes.Email, user.Email)
+                new(ClaimTypes.Email, user.Email),
             };
-
+            
             var roles = await _userManager.GetRolesAsync(user);
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 

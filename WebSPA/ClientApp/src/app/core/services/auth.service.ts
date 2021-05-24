@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { isString, intersection } from 'lodash-es';
 
 import { APP_CONFIG, AppConfig } from '../config';
 import { SignInModel, RegisterModel, JwtData, ChangePasswordModel, ChangeEmailModel } from '../models';
@@ -18,7 +19,7 @@ export class AuthService {
 
   private readonly baseUrl: string;
 
-  constructor(@Inject(APP_CONFIG) config: AppConfig, private http: HttpClient, jwtService: JwtHelperService) {
+  constructor(@Inject(APP_CONFIG) config: AppConfig, private http: HttpClient, private jwtService: JwtHelperService) {
     this.baseUrl = `${config.apiUrl}/api/auth`;
 
     const savedToken = AuthService.getToken();
@@ -32,6 +33,7 @@ export class AuthService {
         return {
           nameid: data.nameid,
           email: data.email,
+          role: data.role,
         };
       })
     );
@@ -49,6 +51,34 @@ export class AuthService {
         this.accessToken$.next(token);
       })
     );
+  }
+
+  /**
+   * Проверяет есть ли роль у текущего пользователя
+   *
+   * @param roles роль или список ролей
+   */
+  hasRole(roles: string | string[]): boolean {
+    if (roles == null || roles.length === 0) {
+      return false;
+    }
+
+    const payload = this.jwtService.decodeToken() as JwtData | null;
+    if (payload?.role == null) {
+      return false;
+    }
+
+    if (!Array.isArray(roles)) {
+      roles = [roles];
+    }
+
+    const userRoles = isString(payload.role) ? [payload.role] : payload.role;
+    if (userRoles.some((x) => x === 'admin')) {
+      return true;
+    }
+
+    const u = intersection(userRoles, roles);
+    return u.length > 0;
   }
 
   register(model: RegisterModel): Observable<void> {

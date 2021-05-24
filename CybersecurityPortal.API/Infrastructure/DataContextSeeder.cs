@@ -60,12 +60,10 @@ namespace CybersecurityPortal.API.Infrastructure
             var userManager = services.GetRequiredService<UserManager<User>>();
 
             const string adminRoleName = "admin";
-            const string moderatorRoleName = "moderator";
 
             if (!roleManager.Roles.Any())
             {
                 await roleManager.CreateAsync(new IdentityRole(adminRoleName));
-                await roleManager.CreateAsync(new IdentityRole(moderatorRoleName));
             }
 
             if (!userManager.Users.Any())
@@ -77,14 +75,6 @@ namespace CybersecurityPortal.API.Infrastructure
                 };
                 await userManager.CreateAsync(adminUser, "Admin12345");
                 await userManager.AddToRoleAsync(adminUser, adminRoleName);
-
-                var moderatorUser = new User
-                {
-                    UserName = "moderator",
-                    Email = "moderator@cybersecutiry-portal.com"
-                };
-                await userManager.CreateAsync(moderatorUser, "Moderator12345");
-                await userManager.AddToRoleAsync(adminUser, moderatorRoleName);
 
                 var defaultUser = new User
                 {
@@ -101,6 +91,7 @@ namespace CybersecurityPortal.API.Infrastructure
             var range = (int)(DateTime.Now - start).TotalMinutes;
             return start.AddMinutes(Rnd.Next(range));
         }
+
         public static IEnumerable<T> Shuffle<T>(IEnumerable<T> source)
         {
             var rng = new Random();

@@ -10,4 +10,8 @@
       background-color: transparentize(mat-color($primary), 0.7);
     }
   }
+
+  .mat-warn {
+    color: mat-color(map-get($config, warn));
+  }
 }

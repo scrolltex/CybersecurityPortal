@@ -9,8 +9,10 @@ import { ArticlesByCategoryComponent } from './components/articles-by-category/a
 import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
 import { MainComponent } from './components/main/main.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 const routes: Routes = [
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule) },
   {
     path: '',
     component: MainComponent,
@@ -52,11 +54,16 @@ const routes: Routes = [
         loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
       },
       {
+        path: 'forbidden',
+        component: ForbiddenComponent,
+      },
+      {
         path: '**',
-        redirectTo: '',
+        redirectTo: '/all',
       },
     ],
   },
+  { path: 'categories', loadChildren: () => import('./admin/categories/categories.module').then(m => m.CategoriesModule) },
 ];
 
 @NgModule({

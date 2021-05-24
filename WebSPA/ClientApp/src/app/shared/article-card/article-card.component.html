@@ -12,7 +12,7 @@
       >
     </h1>
     <markdown [data]="article.content"></markdown>
-    <a mat-stroked-button [routerLink]="['/', 'article', article.id]">Открыть статью <mat-icon>chevron_right</mat-icon></a>
+    <a mat-stroked-button [routerLink]="['/', 'article', article.id]" *ngIf="showCutLink">Открыть статью <mat-icon>chevron_right</mat-icon></a>
   </div>
   <mat-divider></mat-divider>
   <div class="card-footer">

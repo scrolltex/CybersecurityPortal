@@ -34,6 +34,10 @@
       <span>Закладки</span>
     </a>
     <mat-divider> </mat-divider>
+    <a mat-menu-item [routerLink]="['/', 'admin']" *appHasRole="'admin'">
+      <mat-icon>admin_panel_settings</mat-icon>
+      <span>Админка</span>
+    </a>
     <a mat-menu-item [routerLink]="['/', 'auth', 'settings']">
       <mat-icon>settings</mat-icon>
       <span>Настройки аккаунта</span>
