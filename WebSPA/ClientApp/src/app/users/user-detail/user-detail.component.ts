@@ -15,10 +15,6 @@ export class UserDetailComponent implements OnInit {
 
   readonly tabs: { title: string; link: any[] }[] = [
     {
-      title: 'Профиль',
-      link: ['profile'],
-    },
-    {
       title: 'Статьи',
       link: ['articles'],
     },
