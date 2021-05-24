@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Категория</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Название</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Отмена</button>
+  <button mat-button [mat-dialog-close]="form.value">Сохранить</button>
+</mat-dialog-actions>

@@ -17,4 +17,16 @@ export class CategoryService {
   getAll(): Observable<Category[]> {
     return this.http.get<Category[]>(this.baseUrl);
   }
+
+  create(model: Category): Observable<Category> {
+    return this.http.post<Category>(this.baseUrl, model);
+  }
+
+  update(model: Category): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${model.id}`, model);
+  }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
 }

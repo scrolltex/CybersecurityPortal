@@ -73,6 +73,9 @@ namespace CybersecurityPortal.API.Services
                 throw new NotFoundException(nameof(Category));
             }
 
+            if (_context.Categories.Count() == 1)
+                throw new DomainException("Невозможно удалить единственную категорию");
+
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
         }
